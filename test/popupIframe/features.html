@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8>
+    <base href='./user_data/'>
+    <meta http-equiv=X-UA-Compatible content="IE=edge">
+    <meta name=viewport content="width=device-width,initial-scale=1">
+    <title>features</title>
+</head>
+
+<body>
+    <div id="features" class="cutout-features">
+        <div class="cutout-features-card">
+            <h3 class="cutout-features-title">
+                外链上传
+            </h3>
+            <el-form :model="urlForm" ref="urlForm" label-width="40px">
+                <el-form-item label="URL" prop="url" :rules="[{ required: true, message: 'URL不能为空'}]">
+                    <el-input type="text" v-model="urlForm.url"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button class="cutout-features-btn" @click="submitForm('urlForm')">上传</el-button>
+                    <el-button @click="resetForm('urlForm')">重置</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+        <ul class="cutout-features-card cutout-upload" v-if="show">
+            <h3 class="cutout-features-title">
+                任务列表
+            </h3>
+            <li class="cutout-list-item">
+                <div class="cutout-preview" @click="preview(urlForm.url)" style="cursor: pointer;">
+                    <el-avatar :shape="imageShape" :size="imageSize" :src="urlForm.url" :fit="imageFit">
+                    </el-avatar>
+                </div>
+                <div class="cutout-preview" @click="previewBase64(cutoutImage)" style="cursor: pointer;">
+                    <el-avatar :shape="imageShape" :size="imageSize" :src="cutoutImage" :fit="imageFit">
+                        <span v-if="!cutoutImage">加载中...</span>
+                    </el-avatar>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+<!-- 引入样式 -->
+<link rel="stylesheet" href="../../../assets/element-ui@2.12.0.css">
+<link rel="stylesheet" href="./assets/index.css">
+<style>
+    .cutout-features {
+        background: #fff;
+    }
+
+    .cutout-features-card {
+        border: 1px solid #ebeef5;
+        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        background-color: #fff;
+        overflow: hidden;
+        color: #303133;
+        transition: 0.3s;
+        padding: 0 20px;
+        margin-bottom: 12px;
+    }
+
+    .cutout-upload {
+        padding-bottom: 20px;
+    }
+
+    .cutout-upload .el-upload {
+        width: 100%;
+    }
+
+    .cutout-upload .el-upload-dragger {
+        width: 100%;
+    }
+
+    .el-icon-close {
+        display: none !important;
+    }
+
+    .cutout-features-title {
+        font-size: 16px;
+        color: #4a545d;
+    }
+
+    .el-upload-dragger {
+        height: 130px;
+    }
+
+    .el-icon-upload {
+        margin: 24px 0 16px !important;
+    }
+
+    .el-upload-dragger:hover,
+    .el-upload-dragger:hover>.el-icon-upload,
+    .el-upload-dragger:hover>.ex-features-upload {
+        color: #015ca5;
+    }
+
+    .cutout-features-btn {
+        background-color: #00457d !important;
+        border-color: #00457d !important;
+        color: #fff !important;
+    }
+
+    .cutout-features-btn:hover {
+        background-color: #015ca5 !important;
+        border-color: #015ca5 !important;
+        color: #fff !important;
+    }
+</style>
+
+<!-- 引入组件库 -->
+<script src="../../../assets/vue.js"></script>
+<script src="../../../assets/element-ui@2.12.0.js"></script>
+<script src='../../../js/sys_core_inject.js'></script>
+
+<script>
+    const cut = {
+        set: function (val) {
+            if (typeof this.imageHandle === 'function') {
+                imageHandle(val)
+            }
+        },
+        imageHandle: null
+    }
+
+    window.RPA_EventsLoop = function ($$) {
+        var data = !!$$ ? $$.data : null, result, sender = $$.sender, svc, rt;
+        if (!!$$) {
+            switch ($$.key) {
+                case 'APP_RB_GOT_RESULT':/*获取到去除后结果*/
+                    cut.set(data.base64)
+                    break;
+            }
+        }
+    }
+
+    new Vue({
+        el: '#features',
+        data() {
+            return {
+                urlForm: {
+                    url: ""
+                },
+                show: false,
+                imageSize: 150,
+                imageFit: 'fill',
+                imageShape: 'square',
+                cutoutImg: ''
+            };
+        },
+        computed: {
+            cutoutImage() {
+                return this.cutoutImg
+            }
+        },
+        mounted() {
+            cut.imageHandle = this.imageHandle
+        },
+        methods: {
+            imageHandle(val) {
+                this.cutoutImg = val
+            },
+            // URL 提交
+            submitForm(formName) {
+                let _self = this
+                this.$refs[formName].validate(function (valid) {
+                    if (valid) {
+                        _self.show = true
+                        _RPA_CORE_SWITCH.raiseEvent({ key: 'APP_RB_SEND_URL', data: { 'url': _self.urlForm.url }, scope: 'LOCALHOST' })
+                    }
+                })
+            },
+            // 重置URL
+            resetForm(formName) {
+                this.$refs[formName].resetFields()
+            },
+            // 选择文件提交
+            handleFile(file, fileList) {
+                this.turnToBase64(file.raw).then(function (res) {
+                    _RPA_CORE_SWITCH.raiseEvent({ key: 'APP_RB_SEND_URL', data: { 'base64': res }, scope: 'LOCALHOST' })
+                })
+            },
+            // 将图片转为base64
+            turnToBase64(file) {
+                // FileReader 无法return，故借助 Promise
+                return new Promise(function (resolve, reject) {
+                    let reader = new FileReader()
+                    let imageBase = ""
+                    // 开始读取指定的Blob中的内容。一旦完成，result属性中将包含一个data: URL格式的Base64字符串以表示所读取文件的内容
+                    reader.readAsDataURL(file)
+                    // 处理load事件。该事件在读取操作完成时触发
+                    reader.onload = function () {
+                        imageBase = reader.result
+                    }
+                    // 处理error事件。该事件在读取操作发生错误时触发
+                    reader.onerror = function (error) {
+                        reject(error)
+                    }
+                    // 处理loadend事件。该事件在读取操作结束时（要么成功，要么失败）触发
+                    reader.onloadend = function () {
+                        resolve(imageBase)
+                    }
+                })
+            },
+
+            // demo
+            preview(image) {
+                window.open(image)
+            },
+            previewBase64(image) {
+                let w = window.open("");
+                w.document.body.innerHTML = `<img src=${image}>`;
+            }
+        },
+        created() {
+            _RPA_CORE_SWITCH.registerEvents({ keys: 'APP_RB_GOT_RESULT', scope: 'LOCALHOST', callback: RPA_EventsLoop });
+        }
+    })
+
+</script>
+
+</html>

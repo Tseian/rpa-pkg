@@ -1,0 +1,26 @@
+{
+    "name": "rpa-cli",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "test": "node ./bin/index.js"
+    },
+    "keywords": [
+        "rpa",
+        "CLI"
+    ],
+    "author": "tseian",
+    "license": "ISC",
+    "bin": {
+        "rpa-cli": "./bin/index.js"
+    },
+    "dependencies": {
+        "chalk": "^2.3.0",
+        "clear": "0.0.1",
+        "clui": "^0.3.6",
+        "configstore": "^3.1.1",
+        "figlet": "^1.2.0",
+        "inquirer": "^5.0.1",
+        "minimist": "^1.2.0"
+    }
+}

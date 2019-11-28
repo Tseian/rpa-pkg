@@ -1,0 +1,16 @@
+.cutout-list {
+    padding: 10px;
+}
+
+.cutout-list-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-bottom: 1px solid #ddd;
+}
+
+.cutout-preview {
+    text-align: center;
+    margin-right: 10px;
+}

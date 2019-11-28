@@ -1,0 +1,20 @@
+{
+    "mainIframe": [
+        {
+            "name": "a.html",
+            "html": "<html><body></body><link rel='stylesheet' href='https://unpkg.com/element-ui/lib/theme-chalk/index.css'><script src='https://unpkg.com/element-ui/lib/index.js'></script><script src='/assets/vue.js'></script> <style> .test { color: red;  } </style></html>",
+            "codes": [
+                "console.log('outline script')",
+                "console.log('inline script')"
+            ]
+        },
+        {
+            "name": "b.html",
+            "html": "<html><body></body><link rel='stylesheet' href='https://unpkg.com/element-ui/lib/theme-chalk/index.css'><script src='https://unpkg.com/element-ui/lib/index.js'></script> <style> .test { color: red;  } </style></html>",
+            "codes": [
+                "console.log('outline script')",
+                "console.log('inline script')"
+            ]
+        }
+    ]
+}
