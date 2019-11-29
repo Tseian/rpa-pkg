@@ -1,18 +1,15 @@
 #!node
 const lib = require("../lib");
-
 const argv = lib.minimist(process.argv.slice(2))
 const isLog = argv._.includes("debug") || false;
-
 const spinner = lib.ora('开始打包\r\n').start();
 const logger = (...log) => isLog && console.log(log);
 const cLogger = (c, ...log) => lib.chalk[c] && console.log(lib.chalk[c](...log));
-// cLogger("green", "...");
 const pwd = process.cwd();
 
-// const replaceDomain = "https://rpa.gw-ec.com"
 const replaceDomain = "https://rpa.gw-ec.com";
 const replacePath = "";
+
 //返回运行路径下面绝对路径
 const fullPath = (dir) => lib.path.join(pwd, dir);
 let dirs = ["mainIframe", "popupIframe", "winIframe"];
@@ -71,7 +68,8 @@ dirs.forEach(e => {
         spinner.warn(`${e} 不存在`);
     }
 
-    let cssJsFiles = lib.fs.existsSync(assets) ? getDirFile(assets).filter(f => /(\.(css|js))$/.test(f.name)) : [];
+    let cssJsFiles = lib.fs.existsSync(assets)
+        ? getDirFile(assets).filter(f => /(\.(css|js))$/.test(f.name)) : [];
 
     const jss = [];
     const csss = [];
@@ -88,7 +86,7 @@ dirs.forEach(e => {
         return res.push({ name, str });
 
     });
-    logger("jss====", JSON.stringify(jss))
+    logger("jss====", JSON.stringify(jss));
     htmlFiles.forEach(f => {
 
         let r = {
