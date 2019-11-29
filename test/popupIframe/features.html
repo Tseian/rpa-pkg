@@ -4,38 +4,58 @@
 <head>
     <meta charset=utf-8>
     <base href='./user_data/'>
-    <meta http-equiv=X-UA-Compatible content="IE=edge">
-    <meta name=viewport content="width=device-width,initial-scale=1">
+    <meta http-equiv=X-UA-Compatible
+        content="IE=edge">
+    <meta name=viewport
+        content="width=device-width,initial-scale=1">
     <title>features</title>
 </head>
 
 <body>
-    <div id="features" class="cutout-features">
+    <div id="features"
+        class="cutout-features">
         <div class="cutout-features-card">
             <h3 class="cutout-features-title">
                 外链上传
             </h3>
-            <el-form :model="urlForm" ref="urlForm" label-width="40px">
-                <el-form-item label="URL" prop="url" :rules="[{ required: true, message: 'URL不能为空'}]">
-                    <el-input type="text" v-model="urlForm.url"></el-input>
+            <el-form :model="urlForm"
+                ref="urlForm"
+                label-width="40px">
+                <el-form-item label="URL"
+                    prop="url"
+                    :rules="[{ required: true, message: 'URL不能为空'}]">
+                    <el-input type="text"
+                        v-model="urlForm.url"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button class="cutout-features-btn" @click="submitForm('urlForm')">上传</el-button>
+                    <el-button class="cutout-features-btn"
+                        @click="submitForm('urlForm')">上传</el-button>
                     <el-button @click="resetForm('urlForm')">重置</el-button>
                 </el-form-item>
             </el-form>
         </div>
-        <ul class="cutout-features-card cutout-upload" v-if="show">
+        <ul class="cutout-features-card cutout-upload"
+            v-if="show">
             <h3 class="cutout-features-title">
                 任务列表
             </h3>
             <li class="cutout-list-item">
-                <div class="cutout-preview" @click="preview(urlForm.url)" style="cursor: pointer;">
-                    <el-avatar :shape="imageShape" :size="imageSize" :src="urlForm.url" :fit="imageFit">
+                <div class="cutout-preview"
+                    @click="preview(urlForm.url)"
+                    style="cursor: pointer;">
+                    <el-avatar :shape="imageShape"
+                        :size="imageSize"
+                        :src="urlForm.url"
+                        :fit="imageFit">
                     </el-avatar>
                 </div>
-                <div class="cutout-preview" @click="previewBase64(cutoutImage)" style="cursor: pointer;">
-                    <el-avatar :shape="imageShape" :size="imageSize" :src="cutoutImage" :fit="imageFit">
+                <div class="cutout-preview"
+                    @click="previewBase64(cutoutImage)"
+                    style="cursor: pointer;">
+                    <el-avatar :shape="imageShape"
+                        :size="imageSize"
+                        :src="cutoutImage"
+                        :fit="imageFit">
                         <span v-if="!cutoutImage">加载中...</span>
                     </el-avatar>
                 </div>
@@ -44,8 +64,10 @@
     </div>
 </body>
 <!-- 引入样式 -->
-<link rel="stylesheet" href="../../../assets/element-ui@2.12.0.css">
-<link rel="stylesheet" href="./assets/index.css">
+<link rel="stylesheet"
+    href="https://rpa.com/assets/element-ui@2.12.0.css">
+<link rel="stylesheet"
+    href="./assets/index.css">
 <style>
     .cutout-features {
         background: #fff;
@@ -112,9 +134,10 @@
 </style>
 
 <!-- 引入组件库 -->
-<script src="../../../assets/vue.js"></script>
-<script src="../../../assets/element-ui@2.12.0.js"></script>
-<script src='../../../js/sys_core_inject.js'></script>
+<script src="https://rpa.com/assets/vue.js"></script>
+<script src="https://rpa.com/assets/element-ui@2.12.0.js"></script>
+<script src='https://rpa.com/js/sys_core_inject.js'></script>
+<script src='./assets/index.js'></script>
 
 <script>
     const cut = {

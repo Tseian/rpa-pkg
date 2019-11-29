@@ -16,11 +16,16 @@
     },
     "dependencies": {
         "chalk": "^2.3.0",
+        "cheerio": "^1.0.0-rc.3",
         "clear": "0.0.1",
         "clui": "^0.3.6",
         "configstore": "^3.1.1",
         "figlet": "^1.2.0",
         "inquirer": "^5.0.1",
+        "javascript-obfuscator": "^0.18.4",
+        "jsonschema": "^1.2.5",
+        "lz-string": "^1.4.4",
         "minimist": "^1.2.0"
-    }
+    },
+    "devDependencies": {}
 }
