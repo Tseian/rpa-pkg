@@ -11,30 +11,7 @@ npm install rpa-cli -g
 cd existsRobotDir;
 rpa-cli con com;
 ```
-会在当前目录下生成一个robot.rpk文件
-## 说明
-- 机器人文件目录结构
-```
-├── main.js 
-├── mainIframe
-    ├── xxx.html
-    └──assets
-       ├──xxx.css
-       └──xxx.js
-├── popupIframe
-    ├── xxx.html
-    └──assets
-       ├──xxx.css
-       └──xxx.js
-├── winIframe
-    ├── xxx.html
-    └──assets
-       ├──xxx.css
-       └──xxx.js
-
-    
-```
-## 打包后的json文件
+## 打包后会在当前目录下生成一个robot.rpk文件
 robot.rpk文件内容格式
 ```json
 {
@@ -75,4 +52,27 @@ robot.rpk文件内容格式
         ]
     }
 }
+```
+
+## 说明
+- 机器人文件目录结构
+```
+├── main.js 
+├── mainIframe
+    ├── xxx.html
+    └──assets
+       ├──xxx.css
+       └──xxx.js
+├── popupIframe
+    ├── xxx.html
+    └──assets
+       ├──xxx.css
+       └──xxx.js
+├── winIframe
+    ├── xxx.html
+    └──assets
+       ├──xxx.css
+       └──xxx.js
+
+    
 ```
