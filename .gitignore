@@ -2,3 +2,4 @@ node_modules
 .vscode
 test/rpk.json
 test/robot.rpk
+test/robot.json

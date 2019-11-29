@@ -1,10 +1,16 @@
 #!node
+// const isLog = false;
+const isLog = false;
 const lib = require("../lib");
+const spinner = lib.ora('开始打包\r\n').start();
+const logger = (...log) => isLog && console.log(log);
+const cLogger = (c, ...log) => lib.chalk[c] && console.log(lib.chalk[c](...log));
+// cLogger("green", "...");
 const pwd = process.cwd();
 const argv = lib.minimist(process.argv.slice(2));
 // const replaceDomain = "https://rpa.gw-ec.com"
-const replaceDomain = "https://rpa.com";
-const replacePath = "./base";
+const replaceDomain = "https://rpa.gw-ec.com";
+const replacePath = "";
 //返回运行路径下面绝对路径
 const fullPath = (dir) => lib.path.join(pwd, dir);
 let dirs = ["mainIframe", "popupIframe", "winIframe"];
@@ -23,7 +29,10 @@ const getDirFile = (dir) => lib.fs.
 // 获取文件内容 字符串形式返回
 const getFileContent = (file, con = false, com = false) => {
     let str = lib.fs.readFileSync(file, { encoding: "utf8" });
-    if (con) lib.javaScriptObfuscator(str, {
+    logger("file====", file);
+    logger("con==", con, "com===", com);
+
+    if (con) str = lib.javaScriptObfuscator(str, {
         compact: true,
         controlFlowFlattening: true
     });
@@ -42,15 +51,25 @@ let result = {
     winIframe: []
 };
 
+spinner.succeed(`打包 main.js 成功`);
+
 dirs.forEach(e => {
+
     const fullDir = fullPath(e);
     let res = [];
 
+    spinner.color = "yellow";
+    spinner.text = fullDir;
     const htmlFiles = getDirFile(fullDir).filter(f => /\.html$/.test(f.name));
 
     const assets = lib.path.join(fullDir, "assets");
-    let cssJsFiles = lib.fs.existsSync(assets)
-        ? getDirFile(assets).filter(f => /(\.(css|js))$/.test(f.name)) : [];
+    let isExists = lib.fs.existsSync(fullDir);
+
+    if (!isExists) {
+        spinner.warn(`${e} 不存在`);
+    }
+
+    let cssJsFiles = lib.fs.existsSync(assets) ? getDirFile(assets).filter(f => /(\.(css|js))$/.test(f.name)) : [];
 
     const jss = [];
     const csss = [];
@@ -61,12 +80,15 @@ dirs.forEach(e => {
         let filePath = lib.path.join(assets, f.name);
         let name = `./assets/${f.name}`;
 
-        let str = getFileContent(filePath, isCon, isCom);
+        let str = "";
+        if (jss == res) getFileContent(filePath, isCon, isCom);
+        else getFileContent(filePath);
         return res.push({ name, str });
 
     });
 
     htmlFiles.forEach(f => {
+
         let r = {
             name: f.name,
             codes: [],
@@ -126,6 +148,7 @@ dirs.forEach(e => {
     });
 
     result[e] = res;
+    if (isExists) spinner.succeed(`打包 ${e} 成功`);
 });
-// console.log(JSON.stringify(result))
-lib.fs.writeFileSync("robot.rpk", JSON.stringify(result));
+lib.fs.writeFileSync("robot.json", JSON.stringify(result));
+spinner.stop();
