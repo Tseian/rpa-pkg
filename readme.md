@@ -59,20 +59,21 @@ robot.rpk文件内容格式
 ```
 ├── main.js 
 ├── mainIframe
-    ├── xxx.html
-    └──assets
-       ├──xxx.css
-       └──xxx.js
+│   ├── xxx.html
+│   └──assets
+│      ├──xxx.css
+│      └──xxx.js
 ├── popupIframe
-    ├── xxx.html
-    └──assets
-       ├──xxx.css
-       └──xxx.js
+│   ├── xxx.html
+│   └──assets
+│      ├──xxx.css
+│      └──xxx.js
 ├── winIframe
-    ├── xxx.html
-    └──assets
-       ├──xxx.css
-       └──xxx.js
+│   ├── xxx.html
+│   └──assets
+│      ├──xxx.css
+│      └──xxx.js
+├── manifest.json
 
     
 ```
