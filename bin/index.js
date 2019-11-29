@@ -17,7 +17,7 @@ const manifestJson = fullPath("manifest.json");
 
 //校验manifest是否合格
 const manifestValidate = require("../lib/manifestValidate")
-if (!manifestValidate(manifestJson)) throw new TypeError("manifest.json格式不正确");
+const manifest = manifestValidate(manifestJson);
 spinner.succeed(`校验 manifest.json 通过`);
 // 返回文件夹下面的所有文件 dirent 类型
 const getDirFile = (dir) => lib.fs.
@@ -47,9 +47,9 @@ let result = {
     mainIframe: [],
     popupIframe: [],
     winIframe: [],
-    manifest: manifestValidate
+    manifest: manifest
 };
-
+logger("manifestValidate====", manifestValidate);
 spinner.succeed(`打包 main.js 成功`);
 
 dirs.forEach(e => {

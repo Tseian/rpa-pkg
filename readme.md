@@ -50,6 +50,10 @@ robot.rpk文件内容格式
         "codes": [   //js内容
             "console.log('main.js')"
         ]
+    },
+    "manifest": {
+        "name": "String",
+        "description": "String"
     }
 }
 ```
