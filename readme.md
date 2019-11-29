@@ -35,6 +35,7 @@ rpa-cli con com;
     
 ```
 ## 打包后的json文件
+robot.rpk文件内容格式
 ```json
 {
     "mainIframe": [

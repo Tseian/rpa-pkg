@@ -1,13 +1,15 @@
 #!node
-// const isLog = false;
-const isLog = false;
 const lib = require("../lib");
+
+const argv = lib.minimist(process.argv.slice(2))
+const isLog = argv._.includes("debug") || false;
+
 const spinner = lib.ora('开始打包\r\n').start();
 const logger = (...log) => isLog && console.log(log);
 const cLogger = (c, ...log) => lib.chalk[c] && console.log(lib.chalk[c](...log));
 // cLogger("green", "...");
 const pwd = process.cwd();
-const argv = lib.minimist(process.argv.slice(2));
+
 // const replaceDomain = "https://rpa.gw-ec.com"
 const replaceDomain = "https://rpa.gw-ec.com";
 const replacePath = "";
@@ -81,12 +83,12 @@ dirs.forEach(e => {
         let name = `./assets/${f.name}`;
 
         let str = "";
-        if (jss == res) getFileContent(filePath, isCon, isCom);
-        else getFileContent(filePath);
+        if (jss == res) str = getFileContent(filePath, isCon, isCom);
+        else str = getFileContent(filePath);
         return res.push({ name, str });
 
     });
-
+    logger("jss====", JSON.stringify(jss))
     htmlFiles.forEach(f => {
 
         let r = {
@@ -113,10 +115,12 @@ dirs.forEach(e => {
             }
 
             // 删除但从assets中获取
-            if (!scr && src.indexOf("./assets/") == 0) {
+            if (!scr && src.indexOf("./assets") == 0) {
                 let js = jss.find(j => j.name == src);
-                r.codes.push(js.str);
-                return $(e).remove();
+                if (js) {
+                    r.codes.push(js.str);
+                    return $(e).remove();
+                }
             }
 
             // 替换domain
