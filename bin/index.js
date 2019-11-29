@@ -4,7 +4,6 @@ const argv = lib.minimist(process.argv.slice(2))
 const isLog = argv._.includes("debug") || false;
 const spinner = lib.ora('开始打包\r\n').start();
 const logger = (...log) => isLog && console.log(log);
-const cLogger = (c, ...log) => lib.chalk[c] && console.log(lib.chalk[c](...log));
 const pwd = process.cwd();
 
 const replaceDomain = "https://rpa.gw-ec.com";
