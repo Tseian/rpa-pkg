@@ -150,5 +150,5 @@ dirs.forEach(e => {
     result[e] = res;
     if (isExists) spinner.succeed(`打包 ${e} 成功`);
 });
-lib.fs.writeFileSync("robot.json", JSON.stringify(result));
+lib.fs.writeFileSync("robot.rpk", JSON.stringify(result));
 spinner.stop();

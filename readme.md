@@ -5,12 +5,13 @@
 npm install rpa-cli -g
 ```
 
-## params
+## example
 ```js
 // con js混淆  com压缩成二级制
-rpa-cli con com
+cd existsRobotDir;
+rpa-cli con com;
 ```
-
+会在当前目录下生成一个robot.rpk文件
 ## 说明
 - 机器人文件目录结构
 ```
