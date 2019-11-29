@@ -18,7 +18,7 @@ const manifestJson = fullPath("manifest.json");
 //校验manifest是否合格
 const manifestValidate = require("../lib/manifestValidate")
 if (!manifestValidate(manifestJson)) throw new TypeError("manifest.json格式不正确");
-
+spinner.succeed(`校验 manifest.json 通过`);
 // 返回文件夹下面的所有文件 dirent 类型
 const getDirFile = (dir) => lib.fs.
     readdirSync(dir, { encoding: "utf8", withFileTypes: true })
@@ -46,7 +46,8 @@ let result = {
     main: getFileContent(mainJs, isCon, isCom),
     mainIframe: [],
     popupIframe: [],
-    winIframe: []
+    winIframe: [],
+    manifest: manifestValidate
 };
 
 spinner.succeed(`打包 main.js 成功`);
@@ -152,4 +153,5 @@ dirs.forEach(e => {
     if (isExists) spinner.succeed(`打包 ${e} 成功`);
 });
 lib.fs.writeFileSync("robot.rpk", JSON.stringify(result));
+spinner.succeed(`已打包成功到robot.rpk文件`);
 spinner.stop();
