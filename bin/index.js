@@ -6,7 +6,7 @@ const spinner = lib.ora('开始打包\r\n').start();
 const logger = (...log) => isLog && console.log(log);
 const pwd = process.cwd();
 
-const replaceDomain = "https://rpa.gw-ec.com";
+const replaceDomain = "http://rpa.gw-ec.com";
 const replacePath = "";
 
 //返回运行路径下面绝对路径
