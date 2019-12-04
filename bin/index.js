@@ -1,4 +1,4 @@
-#!node
+#!/usr/bin/env node
 const lib = require("../lib");
 const argv = lib.minimist(process.argv.slice(2))
 const isLog = argv._.includes("debug") || false;

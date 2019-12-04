@@ -1,6 +1,6 @@
 {
     "name": "rpa-cli",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "description": "",
     "scripts": {
         "test": "node ./bin/index.js"
@@ -13,6 +13,10 @@
     "license": "ISC",
     "bin": {
         "rpa-cli": "./bin/index.js"
+    },
+    "main": "bin/index.js",
+    "engines": {
+        "node": ">= 4.0"
     },
     "dependencies": {
         "chalk": "^2.3.0",
