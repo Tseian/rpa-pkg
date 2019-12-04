@@ -12,44 +12,34 @@ cd existsRobotDir;
 rpa-cli con com;
 ```
 ## 打包后会在当前目录下生成一个robot.rpk文件
-robot.rpk文件内容格式
+- 解压方式 let decompressedString = lz-string.decompress(compressedStr);
+- robot.rpk文件内容格式
 ```json
 {
     "mainIframe": [
         {
             "name": "filename.html", //文件名
             "html": "",   // html内容
-            "codes": [    // html文件中内容
-                "console.log('outline script')",
-                "console.log('inline script')"
-            ]
+            "codes": "console.log('outline script') \r\n console.log('inline script')" 
         } 
     ],
     "popupIframe": [
         {
             "name": "filename.html", //文件名
             "html": "",   // html内容
-            "codes": [    // html文件中内容
-                "console.log('outline script')",
-                "console.log('inline script')"
-            ]
+            "codes": "console.log('outline script') \r\n console.log('inline script')" 
         } 
     ],
     "winIframe": [
         {
             "name": "filename.html", //文件名
             "html": "",   // html内容
-            "codes": [    // html文件中内容
-                "console.log('outline script')",
-                "console.log('inline script')"
-            ]
+            "codes": "console.log('outline script') \r\n console.log('inline script')" 
         } 
     ],
     "main": {
         "name": "filename.js", // js文件名
-        "codes": [   //js内容
-            "console.log('main.js')"
-        ]
+        "codes": "console.log('outline script') \r\n console.log('inline script')" 
     },
     "manifest": {
         "name": "String",
@@ -81,3 +71,5 @@ robot.rpk文件内容格式
 
     
 ```
+
+

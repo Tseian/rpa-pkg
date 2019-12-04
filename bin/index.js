@@ -143,7 +143,11 @@ dirs.forEach(e => {
                 $(e).attr("href", href.replace(replaceDomain, replacePath));
             }
         });
-
+        let codesStr = "";
+        r.codes.forEach(e => {
+            codesStr += `${e}\r\n`;
+        });
+        r.codes = codesStr;
         r.html = $.html();
         // console.log("test=====", "html===", r.html, "name", r.name, "codes", r.codes);
         res.push(r);
